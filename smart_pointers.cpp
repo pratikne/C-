@@ -1,0 +1,114 @@
+/**@TOPIC :: SMART POINTERS
+ * @NOTES
+ * 
+ * Smart pointer is a class which wraps a raw pointer so that its lifetime can be managed
+ * Its fundamental job is to remove the chances of memory leak
+ * it makes sure object is deleted if it is not referenced anymore
+ * 
+ * Types discussed below:
+ * 
+ * <NOTE> : auto_ptr deprecated after C++11, unique_ptr came with similar functionality
+ *        but with improved security
+ * 
+ * 1) unique_ptr
+ * allows only one owner of the underlying pointer
+ * ownership can be moved but not copied or shared via move()
+ * Use when you want to have single ownership(exclusive) of the resource
+ * 
+ * 2) shared_ptr
+ * allows multiple owner of same pointer ( Reference count is maintained via use_count() )
+ * Use when you want to share ownership of a resource
+ * 
+ * 3) weak_ptr
+ * same as shared_ptr but ref count is not maintained
+ * use to break cyclic dependency references between shared_ptr
+ * 
+ **/ 
+//Below is the implementation of smart pointer.
+//no need to implement in C++ as we already have inbuilt smart pointers
+
+#include <iostream>
+#include <memory> //IMP for smart pointers
+using namespace std;
+
+class MyInt{
+private: 
+    int* data;
+public:
+    explicit MyInt(int* p){
+        data = p;
+    }
+
+    ~MyInt(){
+        delete data;
+    }
+
+    int& operator * (){
+        return *data;
+    }
+};
+
+
+int main(){
+    int* p = new int(20);
+    //MyInt myint = MyInt(p); //same as below
+    MyInt myint(p);
+    cout << *myint << endl;
+
+
+    unique_ptr<int> mit(new int(10)); //unique_ptr mit is created pointing to 10
+    //OR better 
+    unique_ptr<int> mit1 = make_unique<int>(20); //unique_ptr mit1 is created pointing to 10
+
+    unique_ptr<int[]> mit20 = make_unique<int[]>(20); 
+    //unique_ptr mit20 is created pointing to array of 20 ints
+
+    shared_ptr<int> s2(new int(10)); //shared_ptr s2 is created pointing to 10
+    //OR better
+    shared_ptr<int> s1 = make_shared<int>(10); //shared_ptr s1 is created pointing to 10
+
+    cout << "Size of unique ptr : " << sizeof(mit) << endl; //8
+    cout << "Size of shared ptr : " << sizeof(s2) << endl; //16
+
+
+    /*IMP*/
+    unique_ptr<int> mit2 = move(mit1); 
+
+    shared_ptr<int> s3 = s2; //s3 and s2 both sharing same memory location
+
+    cout << "Use count : " << s3.use_count() <<endl; //2
+    cout << "Use count : " << s2.use_count() <<endl; //2
+    s3.reset(); //memory isnt freed as s2 still points to that location
+    cout << "Use count : " << s3.use_count() <<endl; //0
+    cout << "Use count : " << s2.use_count() <<endl; //1
+    s2.reset(); //memory is freed since no one owns the memory now
+    cout << "Use count : " << s3.use_count() <<endl; //0
+    cout << "Use count : " << s2.use_count() <<endl; //0
+
+    weak_ptr<int> wp1(s1);
+    cout << "Size of weak ptr : " << sizeof(wp1) << endl; //16
+    // weak_ptr is created as a copy of shared_ptr
+
+
+    // mit1 is moved to mit2 and mit1 is now pointing to NULL(nullptr)
+    // move transfers ownership
+    // mit2 now owns memory
+    // mit1 is set to nullptr
+
+    int* n = mit.get(); 
+    cout << *n << endl;
+    //get returns address which is assigned to newly created pointer
+
+    int* q = mit.release(); 
+    //mit is moved to q and mit is pointing to NULL
+    cout << *q << endl;
+
+    //delete p;  
+    //Error..No need of this as already handled by wrapping pointer in class
+    //destructor will call delete
+    //same for mit, mit1, mit2 
+    
+    delete n;
+    //delete q; as q also beheves as unique ptr sinec it has an ownership
+    return 0;
+}
