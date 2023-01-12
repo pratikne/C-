@@ -1,6 +1,18 @@
 /**************QUEUE IMPLEMENTATION*****************/
 /***
 No iterator concept here same as stack..Just it is based on FIFO
+Element is inserted from rear and queued towards front
+         front<-{-----------}<-rear
+Element pushed first is popped out first
+
+
+** Time complexities **
+push/enqueue - O(1)
+pop/dequeue  - O(1)
+front/peek   - O(1)
+isempty      - O(1)
+isFull       - O(1)
+
 ***/
 #include<iostream>
 #include<queue>

@@ -8,10 +8,14 @@ top :O(1)
 size :O(1)
 
 internally uses make_heap, push_heap, pop_heap functions
+
+Priority queues are a type of container adapters, specifically designed such that the first element of the queue is either the greatest or the smallest of all elements in the queue and elements are in nonincreasing order (hence we can see that each element of the queue has a priority {fixed order}). However in C++ STL, by default, the top element is always the greatest element. We can also change it to the smallest element at the top. Priority queues are built on the top to the max heap and uses array or vector as an internal structure.
+
 **/
 
 
 #include<bits/stdc++.h>
+#include<queue>
 
 using namespace std;
 
@@ -26,7 +30,7 @@ int main(){
     //below defined in algorithm header
     //make_heap(heap.begin(),heap.end()); //creates max-heap by default
     //front element is the biggest -> heap.front()
-    make_heap(heap.begin(),heap.end(),greater<int>() ); //creates min-heap(parent node grater than child node)
+    make_heap(heap.begin(),heap.end(),greater<int>() ); //creates min-heap(parent node smaller than child node)
     //here, heap.front() returns smallest
     //To insert new value
     heap.push_back(9);
@@ -57,14 +61,24 @@ int main(){
 **/
 
 /**MAX HEAP with priority queue**/
-    priority_queue<int, vector<int> > pq;
+
+    priority_queue<int> gquiz; // creates MAX-HEAP
+    gquiz.push(10);
+    gquiz.push(30);
+    gquiz.push(20);
+    cout << "\ngquiz.top() : " << gquiz.top();
+  
+    cout << "\ngquiz.pop() : ";
+    gquiz.pop();
+
+    priority_queue<int, vector<int> > pq; // creates MAX-HEAP
 
     pq.push(3);
     pq.push(2);
     pq.push(1);
     pq.push(5);
     pq.push(6);
-    cout<<"SIZE OF MAXHEAP : " << pq.size()<<endl; //5
+    cout<<"SIZE OF MAXHEAP : " << pq.size() << endl; //5
 
     cout<<pq.top()<<endl; //Gives topmost value or greater of all as it is maxheap
 
@@ -77,7 +91,9 @@ int main(){
         pq.pop();
     }cout<<endl;
 
-/**MIN hEAP with priority queue**/
+
+
+/**MIN hEAP with priority queue**/ //IMP
     priority_queue<int, vector<int>, greater<int> > pqm;
 
     pqm.push(2);
@@ -90,4 +106,14 @@ int main(){
     cout<<pqm.top()<<endl; //Gives topmost value or smallest of all as it is minheap
 
     return 0;
+    /**
+     * APPLICATIONS
+     * 
+     * 1. OS for load balancing
+     * 2. Interrupt handling
+     * 3. Heap sort
+     * 4. AI 
+     * 
+     */
 }
+

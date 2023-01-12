@@ -1,15 +1,24 @@
-/**************DOUBLE LINKED LINEAR LIST IMPLEMENTATION***************/
+/**************DOUBLE LINKED LINEAR LIST IMPLEMENTATION***************
+ * 
+ * APLLICATIONS
+ * 1. Navigation system for front and back
+ * 2. Broswer for front and back navigation button
+ * 3. undo and redo
+ * 4. used in OS..thread schedular
+ * 
+ */
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <list>   //this is must for implementing list
-#include<iterator>
+#include <iterator>
 using namespace std;
 
 void print(list<int> &li){
     list<int> :: iterator g = li.begin();
-    cout << "NULL<->";
+    cout << "NULL<-->";
     while(g != li.end()){
-        cout<<*g<<"<->";
+        cout<<*g<<"<-->";
         g++;
     }
     cout<<"NULL"<<endl;
@@ -108,7 +117,7 @@ int main(){
     advance(it,5);    //shifts 5 positions from it in RHS
     cout<<"Value at that iterator now is "<<*it<<endl;
 
-    vector<int> v1(3,15);
+    vector<int> v1(3,15); // 15 15 15
     list2.insert(list2.begin(),v1.begin(),v1.end()); // 15 15 15
     print(list2);
 

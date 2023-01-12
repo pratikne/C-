@@ -1,15 +1,26 @@
 /**************MAP IMPLEMENTATION***************/
+// Luv Youtube
 
 /*Map internally implemented via RBT(Red black tree)...not of continuous memory
- * Data stored in (key,value) pair..key always unique
+hence, iterator is possible like linked list but not like array
+ * Data stored in (key,value) pairs..key always unique
 
- * 1) Map (self balancing BST) --> sorted order on basis on key which are unique
+ * 1) Map (self balancing BST like Red black tree) --> sorted order on basis on key which are unique
  * 2) Unordered_Map (Hash map) --> random order*........uses HASH table internally
+ * 3) Multimap (same as Map just that we can store duplicate keys)
+ * 
+ * Note
+ If order matters, use map
+ If not, use unordered_map
+
+ unordered_map won't work for complex datatypes as key
+ like Pair, vector for which we can't create hash value
+
  * 
  * 
                 | map                 | unordered_map
 ---------------------------------------------------------
-Ordering        | increasing  order   | no ordering
+Ordering        | increasing  order   | no ordering(Random)
                 | (by default)        |
 
 Implementation  | Self balancing BST  | Hash Table
@@ -34,10 +45,14 @@ using namespace std;
 
 void print(map<int, string> &m){  //O(nlogN)
     map<int, string> :: iterator it;
-    cout<< "Size of below map : "<<m.size()<<endl;
+    cout<< "Size of below map : "<<m.size()<<endl; //Prints size of Map
     for(it=m.begin(); it!=m.end();it++){
         cout<<it->first<<" "<<it->second<<endl;
     }
+
+    // for(auto &pr : m){ //pr is created as ref to m so that copy isn't created
+    //     cout << pr.first << "\t" << pr.second << endl;
+    // }
 }
 
 
@@ -50,9 +65,15 @@ int main(){
     m[1] = "Pratik";
     m[5] = "Hi All";
     m.insert(make_pair(3,"Ardeep"));  //takes O(logN) time...for above as well.
-    m[4];   //string will be initialed with default NULL value....same for other datatypes
+    m[4];   //string will be initialed with default empty string....same for other datatypes
     m[5] = "Ritik";   //value of 5th key is modified.....wont insert new map of same key
     print(m);
+
+    for(auto &pr : m){ //pr is created as ref to m so that copy isn't created
+        cout << pr.first << "\t" << pr.second << endl;
+    }
+
+
 
     it = m.find(3);   //finds if key 3 is present or not..takes O(logN) time
     if(it != m.end())
@@ -66,25 +87,34 @@ int main(){
     it=m.begin();
     it++;  //points to second pair in the map
     advance(it,5);
+
     if(it != m.end())
         m.erase(it);  //here, passing iterator (key can also be passed)
         //m.erase(it,it.end())  --[start,end) is erased
-        //erases that pair pointed by the iterator.....but if bymistake we give iterator which is pointing beyong the range..it will give segmentation fault
+        //erases that pair pointed by the iterator.....
+        // but if bymistake we give iterator which is pointing beyond the range
+        //..it will give segmentation fault
+
     print(m);
 
     //m.clear();   //clear entire map
     //print(m);
 
-/**
+
     map<string , string> m2 ;
     m2["Pratik"] = "Negi";  
-    m2["Ritik"] = "Negi";  //O(keystring.size() * logN)  time
+    m2["Ritik"] = "Negi";  //O(key_string.size() * logN)  time
     m2["Ardeep"] = "Negi";
-**/
+
     cout<<"Upper bound :"<<endl;
-    cout<<m.upper_bound(4)->second<<endl;
+    cout<<m.upper_bound(1)->second<<endl;
     cout<<"Lower bound :"<<endl;
-    cout<<m.lower_bound(4)->second<<endl;
+    cout<<m.lower_bound(1)->second<<endl;
+
+    cout << m.count(3) << endl; //if 3 key is present..1, else 0
+
+    m.clear();
+    print(m);
 
     return 0;
 }

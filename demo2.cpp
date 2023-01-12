@@ -46,7 +46,8 @@ int main(){
 
     char* arr = "Hello"; 
     printf("%ld\n",strlen(arr)); //5
-    // Above is String literal...we can't modify it ..Read only
+    // Above is String literal...we can't modify the individual elements pointed by arr ..Read only
+    // but the pointer can point to diff address having diff string
     // arr[0] = 'P' ;//Error - Segmentation fault
 
     char arr2[] = "Hello"; // H e l l o \0
@@ -55,6 +56,11 @@ int main(){
     arr2[0] = 'C'; //Works fine
     puts(arr2); //Cello
     printf("%ld\n",strlen(arr)); //5
+
+
+    arr = "Congrats"; //Possible
+    //arr[0] = 'P'; //Error
+    puts(arr);
 
     return 0;
 }

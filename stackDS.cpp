@@ -4,7 +4,7 @@
  APPLICATIONS:
  1)Insertion - O(1){O(n) for worst case when stack overflow case occurs}
  2)Deletion - O(1)
- 3)Isempty
+ 3)Isempty  - O(1)
  4)Peek/Top - O(1)
 
  LOGIC.....int array of a particular size
@@ -43,7 +43,7 @@ bool isFull(){
 }
 
 void push(int x){
-    if(top == (max_size -1)){
+    if(top == (max_size - 1)){
         cout<<"Error : Stack Overflow";
         return;
     }

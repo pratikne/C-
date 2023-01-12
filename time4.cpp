@@ -1,5 +1,5 @@
 #include <iostream>
-#include <sys/time.h>
+#include <sys/time.h> //IMP
 
 using namespace std;
 
@@ -8,23 +8,29 @@ using namespace std;
  * In this struct more field valures present like day month sec hour weekday year day...
  * There are two function call present for these one is for global time (gmtime) and another is for local time(localtime).
  **/
+
 int main()
 {
     time_t pt;
     struct tm *ptm;
+    char buff[100];
 
-    time(&pt);
+    time(&pt);  //IMP
     cout << "Value of pt is " << pt << endl;
 
     cout<<"Global time value:"<<endl;
     ptm = gmtime(&pt);
+    strftime(buff, 100, "%d-%m-%Y %H:%M:%S", ptm);
+    printf("Global Time  -->  [%s]\n", buff);
 
-    printf("tm_sec:[%d] tm_min:[%d] tm_hour:[%d] tm_mday:[%d] tm_mon:[%d] tm_year:[%d] tm_wday:[%d] tm_yday:[%d] tm_isdst:[%d]\n", ptm->tm_sec, ptm->tm_min, ptm->tm_hour, ptm->tm_mday, ptm->tm_mon, ptm->tm_year, ptm->tm_wday, ptm->tm_yday,ptm->tm_isdst);
+    printf("tm_sec:[%d] tm_min:[%d] tm_hour:[%d] tm_mday:[%d] tm_mon:[%d] tm_year:[%d] tm_wday:[%d] tm_yday:[%d] tm_isdst:[%d]\n", ptm->tm_sec, ptm->tm_min, ptm->tm_hour, ptm->tm_mday, ptm->tm_mon + 1, ptm->tm_year + 1900, ptm->tm_wday, ptm->tm_yday,ptm->tm_isdst);
 
     cout<<"Local time value:"<<endl;
     ptm = localtime(&pt);
+    strftime(buff, 100, "%d-%m-%Y %H:%M:%S", ptm);
+    printf("Local Time  -->  [%s]\n", buff);
     
-    printf("tm_sec:[%d] tm_min:[%d] tm_hour:[%d] tm_mday:[%d] tm_mon:[%d] tm_year:[%d] tm_wday:[%d] tm_yday:[%d] tm_isdst:[%d]\n", ptm->tm_sec, ptm->tm_min, ptm->tm_hour, ptm->tm_mday, ptm->tm_mon, ptm->tm_year, ptm->tm_wday, ptm->tm_yday,ptm->tm_isdst);
+    printf("tm_sec:[%d] tm_min:[%d] tm_hour:[%d] tm_mday:[%d] tm_mon:[%d] tm_year:[%d] tm_wday:[%d] tm_yday:[%d] tm_isdst:[%d]\n", ptm->tm_sec, ptm->tm_min, ptm->tm_hour, ptm->tm_mday, ptm->tm_mon + 1, ptm->tm_year + 1900, ptm->tm_wday, ptm->tm_yday,ptm->tm_isdst);
 
     // There is reverse function also present which convert broken tm time structure into time_t format
     //mktime(cont struct *tm))    

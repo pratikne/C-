@@ -5,6 +5,10 @@ using namespace std;
  * P->Polymorphism
  * I->Inheritance
  * E->Encapsulation
+ * 
+ *> Data encapsulation is a mechanism of bundling the data, and the functions that use them 
+ *> Data abstraction is a mechanism of exposing only the interfaces 
+ and hiding the implementation details from the user.
  ****/
 
 /** ACCESS MODIFIERS -> supports ABSTRACTION within ENCAPSULATED format....data hiding for increased security

@@ -2,13 +2,14 @@
 //malloc vs calloc
 
 #include <iostream>
+#include <stdlib.h> //IMP fo malloc and calloc
 using namespace std;
 
 int main(){
 
     /** C style **/
 
-    int* i = (int*)malloc(sizeof(int)); //1 int
+    int* i = (int*)malloc(sizeof(int) ); //1 int
     int* ia = (int*)malloc(sizeof(int) * 10); //10 int so int array
     //malloc garbage value, calloc assigns 0, also it demands 2 parameter
 
@@ -49,10 +50,12 @@ int main(){
 
     int* p = new int(10); //create a pointer pointing to an int having value 10 in it
     //int *parr = new int[10]; //create a pointer pointing to an array of int having size 10 and parr pointing to first element
-    int* parr = new(nothrow) int[10]{0};
-    if(!p){
+    int* parr = new(nothrow) int[10]{0}; //nothrow means dont throw exception if memory not allocated
+    // instead return NULL
+    if(!parr){
         cout << "Memory allocation failed\n";
     }
+    
     //all elements storing 0 in them 
     cout << "\n New Array " << endl;
     for (int i = 0; i < 10; i++){
@@ -93,6 +96,13 @@ int main(){
      * 
      * int *p = B //Error
      * int *p[3] = B //Fine
+     * 
+     * 
+     * arr[m][n]
+     * int** arr = new int* [m];
+     * for...
+     *      arr[i] = new int[n];
+     * 
      */
 
     return 0;

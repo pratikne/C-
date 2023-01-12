@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// When you required time only in second use time_t 
+// When you required time only in second use time_t //epoch timestamp
 // this contain a same value that is present in timeval tv_sec filed.
 
 int main()

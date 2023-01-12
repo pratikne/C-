@@ -1,5 +1,8 @@
 /***************SET IMPLEMENTATION*****************/
 //Associative container wherein each element is unique
+//internally set -> RBT O(logN)
+//internally unordered_set -> Hash O(1) - average
+
 #include <iostream>
 #include <set>  //Must be present for ordered(asc) non repeating element
 #include<algorithm>
@@ -24,7 +27,12 @@ int main(){
 
     for (it = myset.begin(); it != myset.end(); it++)
     {
-        cout<<*(it)<< " ";
+        cout<<*(it)<< "\t";
+    }
+    cout<<endl;
+
+    for(auto&s : myset){
+        cout << s << "\t";
     }
     cout<<endl;
 
@@ -38,7 +46,7 @@ int main(){
 
     //No front, back, sort and reverse
 
-    ///myset2.erase(50);    20 90
+    //myset2.erase(50);    20 90
     //myset2.erase(myset2.begin(),myset2.end());   // Nothing..all erased
 
     //it = myset2.begin()++;
@@ -49,6 +57,11 @@ int main(){
         cout<<*(it)<< " ";
     }
     cout<<endl;
+    auto it = myset2.find(50);
+    if(it != myset2.end()){
+        myset2.erase(it);  //erases first iterator having value 50 in case of multiset
+    }
+
     cout<<*myset.begin()<<endl;          //prints first element in set
     cout<<*myset.rbegin()<<endl;         //prints last element in set
     cout<<*myset.lower_bound(40)<<endl;  //find lower bound of that value passed....lower bound is value equal to or just greater than that if match not found

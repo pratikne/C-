@@ -1,5 +1,7 @@
+// String is mutable in C++
+
 #include<bits/stdc++.h>
-#include<string.h>
+#include<string.h> //IMP
 
 using namespace std;
 
@@ -12,7 +14,7 @@ int main(){
     string s2 = "Hello World";
     cout<<s2<<" "<<s2.size()<<endl;
 
-    string s3 = s2;
+    string s3 = s2; //string copy through assignment operator
     cout<<s3<<" "<<s3.size()<<endl;
 
     s3 = s3 + " C " + s2 + 'C' + 'B' + '1'; //Concatenation
@@ -36,9 +38,45 @@ int main(){
         cout<<*it<<" ";
     }cout<<endl;
 
+    string data = "9";
+    int idata = stoi(data);
+    cout <<"Hi New "<< idata << endl;
+
+    // checking for digit
+    if(isdigit(data[0])){
+        cout << "Data[0] is digit" << endl;
+    }
+
+    //checking for alphabet/letters
+    if(isalpha(data[0])){
+        cout << "Data[0] is alphabet" << endl;
+    }
+    else{
+        cout << "Data[0] is not alphabet" << endl;
+    }
+
+    data = to_string(idata);
+    cout << "Hi New string " << data << endl ;
+    data[0] = 'P';
+
+    //Upper and lower check and conversion
+    data[0] = (char) tolower(data[0]) ; //changed to small p
+    cout << data << endl;
+    if(isupper(data[0]))
+        cout << (char) tolower(data[0]) << "\t";
+    else    
+        cout << (char) toupper(data[0]) << "\t"; // P --but not reflected in data[0] as it is not updated
+    cout << data << endl;
+
     string str;
+    str.clear();
     string str2 = "Writing ";
     string str3 = "print 10 and then 5 more";
+
+    string firstName = "Pratik ";
+    string lastName = "Negi";
+    string fullName = firstName.append(lastName);
+    cout << fullName << endl;
 
     cout<<"APPEND FUNCTION TEST"<<endl; //adding from last
     str.append(str2);    //"Writing "
@@ -47,7 +85,9 @@ int main(){
     str.append("here: "); //"here: "
     str.append(10,'.'); //".........."
     str.append(str3.begin()+8,str3.end()); //" and then 5 more"
-    cout<<str<<endl;
+
+    cout<<" [APPEND] : " << str <<endl;
+    // Writing 10 dots here: .......... and then 5 more
 
     cout<<"INSERT FUNCTION TEST"<<endl;
     str.clear();
@@ -67,16 +107,18 @@ int main(){
     str.insert(str.end(),3,'.'); //"to be$ not to be: that is the question..."
     cout<<*it<<endl; //element at that iterator
     str.insert(it+2,str3.begin(),str3.begin()+3);  //"to be$ (or )not to be: that is the question..."
-    cout<<str<<endl;
-
+    
+    cout<<"[INSERT] : " << str <<endl;
+    // to be$ or not to be: that is the question...
 
     cout<<"ERASE FUNCTION TEST"<<endl;
     str.clear();
     str = "This is an example sentence.";
-    str.erase(10,8); //"This is an sentence"
-    str.erase(str.begin()+9); //"This is a sentence"
-    str.erase(str.begin()+5,str.end()-10); //"This sentence"
-    cout<<str<<endl;
+    str.erase(10,8); //"This is an sentence."
+    str.erase(str.begin()+9); //"This is a sentence."
+    str.erase(str.begin()+5,str.end()-10); //"This sentence."
+
+    cout<<"[ERASE] : " << str <<endl; // This  sentence.
 
     cout<<"REPLACE FUNCTION TEST"<<endl;
     str.clear();
@@ -90,7 +132,7 @@ int main(){
     str.replace(8,10,"just a"); //"this is just a phrase."
     str.replace(8,6,"a shortleg",7); //"this is a short phrase."
     str.replace(22,1,3,'!'); //"this is a short phrase!!!"
-    cout<<str<<endl;
+    cout<<"[REPLACE] : " << str <<endl;
 
     str.replace(str.begin(),str.end()-3,str3); //"sample phrase!!!"
     str.replace(str.begin(),str.begin()+6,"replace"); //"replace phrase!!!"
@@ -98,11 +140,12 @@ int main(){
     cout<<str<<'\n';
     str.replace(str.begin()+12,str.end()-4,5,'O'); //"replace is cOOOOOl!!!"
     str.replace(str.begin()+11,str.end(),str4.begin(),str4.end()); //"replace is useful."
-    cout<<str<<'\n';  //endl = '\n'
+    cout<<"[REPLACE] : " << str <<'\n';  //endl = '\n'
 
     cout<<"SWAP/COMPARE FUNCTION TEST"<<endl;
     str2 = "qwerty";
     cout<<"Before swap : "<< str << " | " << str2 <<endl;
+    
     cout<<str.compare(str2)<<endl;
     str.swap(str2);
     cout<<"Before swap : "<< str << " | " << str2 <<endl;
@@ -134,3 +177,4 @@ int main(){
     cout<<pos<<endl;
     return 0;
 }
+

@@ -1,8 +1,103 @@
 // CPP program to demonstrate
 // strcat
+
 #include <cstring>
 #include <iostream>
 using namespace std;
+
+unsigned int my_strlen(const char* s){
+    unsigned int count = 0;
+    while (*s != '\0'){
+        count++;
+        s++;
+    }
+    return count;
+}
+
+char* mr_strcpy(char* dest, const char* source){
+    // return NULL if no memory allocated to dest
+    if(dest == NULL){
+        return NULL;
+    }
+    // ptr points to beginning of dest
+    char* ptr = dest;
+    while(*source != '\0'){
+        *ptr = *source;
+        ptr++;
+        source++;
+    }
+    // add \0 at end
+    *ptr = '\0';
+    return ptr;
+}
+
+char* mr_strncpy(char* dest, const char* source, size_t num){
+    // return NULL if no memory allocated to dest
+    if(dest == NULL){
+        return NULL;
+    }
+    // ptr points to beginning of dest
+    char* ptr = dest;
+    while(*source != '\0' && (num > 0)){
+        *ptr = *source;
+        ptr++;
+        source++;
+        num--;
+    }
+    // add \0 at end
+    *ptr = '\0';
+    return ptr;
+}
+
+char* mr_strcat(char* dest, const char* source){
+    // return NULL if no memory allocated to dest
+    if(dest == NULL){
+        return NULL;
+    }
+
+    // ptr points to end of dest
+    char* ptr = dest + strlen(dest);
+    while(*source != '\0'){
+        *ptr = *source;
+        ptr++;
+        source++;
+    }
+
+    // add \0 at end
+    *ptr = '\0';
+    return ptr;
+}
+
+char* mr_strncat(char* dest, const char* source, size_t num){
+    // return NULL if no memory allocated to dest
+    if(dest == NULL){
+        return NULL;
+    }
+
+    // ptr points to end of dest
+    char* ptr = dest + strlen(dest);
+    while(*source != '\0' && (num > 0)){
+        *ptr = *source;
+        ptr++;
+        source++;
+        num--;
+    }
+
+    // add \0 at end
+    *ptr = '\0';
+    return ptr;
+}
+
+int my_strcmp(const char* X, const char* Y){
+    while(*X != '\0' && (*X == *Y)){
+        X++;
+        Y++;
+    }
+
+    return ((unsigned char)*X - (unsigned char)(*Y));
+}
+
+
 int main()
 {
     /**STRLEN**/
@@ -98,11 +193,12 @@ int main()
     char string[50] = "Test,string1,Test,string2:Test:string3";
     char *p;
     printf("String  \"%s\" is split into tokens:\n", string);
+
     p = strtok(string, ",:");
-    while (p != NULL)
+    while (p != NULL) //end will always be NULL
     {
         printf("%s\n", p);
-        p = strtok(NULL, ",:");
+        p = strtok(NULL, ",:"); // NULL is to tell the function to use the previous string
     }
 
     // String “Test,string1,Test,string2:Test:string3” is split into tokens:

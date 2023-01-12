@@ -2,11 +2,13 @@
 #include <iostream>
 using namespace std;
 
-class Vehicle //creating abstract Vehicle class having pure virtual function
+class Vehicle //creating abstract Vehicle class having pure virtual function - Interface class
 {
 public:
-    virtual void printVehicle() = 0;
+    virtual void printVehicle() = 0; //Pure virtual method
+    virtual ~Vehicle() {}
 };
+
 class TwoWheeler : public Vehicle
 {
 public:
@@ -15,6 +17,7 @@ public:
         cout << "I am two wheeler" << endl;
     }
 };
+
 class FourWheeler : public Vehicle
 {
 public:
@@ -35,8 +38,7 @@ public:
     Client(int type)
     {
 
-        // Client explicitly creates classes according to
-        // type
+        // Client explicitly creates classes according to input type
         if (type == 1)
             pVehicle = new TwoWheeler();
         else if (type == 2)
@@ -54,7 +56,10 @@ public:
         }
     }
 
-    Vehicle* getVehicle() { return pVehicle; }
+    Vehicle* getVehicle() //Funstion returning pointer of type Vehicle
+    { 
+        return pVehicle; 
+    }
 
 };
 

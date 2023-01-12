@@ -7,6 +7,7 @@ int main()
 {
 
 int num;
+cout << "Enter a number : ";
 cin>>num;
 //To check if number is even or odd
 //even number xor with 1 increments the num by 1
@@ -39,12 +40,13 @@ cout<<(num << 3)<<endl;
  * #define INT_BITS 32
  * 
  
-return (n | (1 << (k - 1))); /Set a bit
-return (n & (~(1 << (k - 1)))); /Reset a bit
-return (n ^ (1 << (k - 1))); /Toggle a bit
-return (n << d)|(n >> (INT_BITS - d)); /left rotate bits by d position
-return (n >> d)|(n << (INT_BITS - d)); /right rotate bits by d position  
- */
+return (n | (1 << (k - 1)));            /Set a bit
+return (n & (~(1 << (k - 1))));         /Reset a bit
+return (n ^ (1 << (k - 1)));            /Toggle a bit
+return (n << d)|(n >> (INT_BITS - d));  /left rotate bits by d position
+return (n >> d)|(n << (INT_BITS - d));  /right rotate bits by d position
+
+*/
 
 bitset<8> b(num);
 //Above uses bitset class of C++ to store 8 bit binary rep. of any num in b .

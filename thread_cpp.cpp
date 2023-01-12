@@ -1,10 +1,12 @@
 // thread example
+// Examples of Multithreading - Browser tabs, Spell-Checker, MS-Word, VS Code
 #include <iostream> // std::cout
 #include <thread>   // std::thread
 #include <mutex>    
 #include <chrono>   // chrono::seconds
 #include <condition_variable>
 #include <atomic>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -20,7 +22,7 @@ std::mutex m;
 int myvar = 0;
 
 void addvar(){
-    //lock_guard<std::mutex> lock(m); //IMP
+    //lock_guard<std::mutex> lock(m); //IMP - scope is till the block in which it's defined
     
     m.lock(); //incoming thread locks this section for updation
     ++myvar; //Critical section
@@ -39,7 +41,7 @@ public:
             cout<< x << endl;
         }
     }
-    void operator ()(int x){ //Functor
+    void operator ()(int x){ //Functor - if overloaded () of class
         while(x-- > 0){
             cout<< x << endl;
         }
@@ -49,8 +51,9 @@ public:
 // thread foo adds 5 in the temp
 void foo()
 {
+    cout << "ThreadID of foo : " << std::this_thread::get_id() << endl;
     this_thread::sleep_for(chrono::seconds(5)); //Thread will sleep for 5 seconds
-    //sleep(5);
+    // sleep(5);
     temp+=5;
     cout << temp << endl;
 }
@@ -68,12 +71,28 @@ int main()
     thread th1(addvar);
     thread th2(addvar);
 
+    cout << "ThreadID of " << __FUNCTION__ << " : " << std::this_thread::get_id() << endl;
+
     th1.join();
     th2.join();
 
     cout<< myvar <<endl;
 
     //Lambda Function
+    /**C++ 11 introduced lambda expressions to allow inline functions 
+     * which can be used for short snippets of code that are not going 
+     * to be reused and therefore do not require a name
+     * 
+     * auto fun = [](){}
+     * 
+     * [] -> This is the capture list..we can pass & or = there
+     *    -> & means all the local variables will be treated as pass by ref within the function(can be modified)
+     *    -> = means all the local variables will be treated as pass by value within the function(just read only)
+     * 
+     * () -> This is the parameters list which we pass to the function same as normal function
+     * 
+     * {} -> function body 
+     */
     auto fun = [](int x)
     {
         while (x-- > 0)
@@ -125,8 +144,8 @@ int main()
  * @join
  * Once a thread is started, we(Main) wait for it to finish by calling join() on thread object
  * Double join for same thread will result into program termination/crash
- * hence, we need to check thread is joinable or not beforhand using joinable(){
- * if not joinable- join() shoudnt be added for that thread
+ * hence, we need to check thread is joinable or not beforehand using joinable(){
+ * if not joinable- join() shoudn't be added for that thread
  * if yes, join it
  * }
  * 
@@ -139,37 +158,44 @@ int main()
  * then only detach()
  * }
  * 
- * @IMP_NOTE
- *always try to join or detach the thread you are creating depending on the requirement
- *if not..it may lead to problem as thread calls its destructors which will terminate the program
+ * @Very IMP_NOTE
+ *  ALWAYS try to join or detach the thread you are creating depending on the requirement
+ *  if not..it may lead to problem as thread calls its destructors which will terminate the program
  */
 
 /**
  * @RACE CONDITION
- * Race condition occure when two or more threads/processes happens to change a common resource/critical data at same time
+ * Race condition occurs when two or more threads/processes happens to change a common resource/critical data at same time
  * that critical section needs to be provided 
  * 
  * @MUTEX (Mutual Exclusion - Samjhouta(Hindi))
  * It is used to avoid Race condition
  * Mutex is a locking mechanism
- * Mutex is used to provide synchronization in C++ which means only one thread can access the object at the same time
+ * Mutex is used to provide synchronization which means only one thread can access the object a time
  * By the use of Mutex keyword we can lock our object from being accessed by multiple threads at the same time.
  * Thread which locks it will only unlock it and noone else
  * Working based on binary value 1/0
  * Initially 1 when initialized..thread locking it will decrement it to 0
  * other threads will till then wait(get blocked) in this lock() call as for them value will be 0
- * once its critical sectio is done execution...it will unlock it and update 1 again
+ * once its critical section is done execution...it will unlock it and update 1 again
  * other threads will then take over the control ( 1 at a time)
  * lock(), unlock() - blocking call
  * 
  * std::mutex::try_lock() - non blocking version of lock()
  * Tries to lock the mutex..if not returns immediately without blocking
  * if unsucc lock as in above case..returns false 
+ * 
+ * if(m.try_lock()){
+ *  //if true..it will enter here and execute critical section
+ * }
+ * 
  * if same threads calls try_lock()...it results is deadlock...(recursive mutex is the solution for you then)
  *
- * @lock_guard
  * 
- * light weight wraper for owing the mutex on scopr basis
+ * 
+ * @lock_guard
+ * light weight wraper for owing the mutex on scope basis
+ * 
  * 
  * lock_guard<mutex> lock(mtx);
  * no need for unlock as mtx will auto unlock once lock_guard is out of scope
@@ -188,4 +214,12 @@ int main()
  * - cond.notify_all()
  * Needs mutex to implement
  * 
+ * 
+ * DEADLOCK is a condition that occurs when two threads or processes wait for each other to complete and halts without proceeding further.
+ * 
+ * Necessary condition :
+ *  Mutual exclusion
+ *  Hold and Wait
+ *  No preemption
+ *  Circular wait
  */
